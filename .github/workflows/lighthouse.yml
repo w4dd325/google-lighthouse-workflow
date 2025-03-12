@@ -21,8 +21,7 @@ jobs:
         run: lhci autorun
 
       - name: Run Lighthouse Assertions
-        run: |
-          lhci assert || echo "⚠️ Lighthouse scores are below the set thresholds! Check the report for details."
+        run: lhci assert || echo "⚠️ Lighthouse scores are below the set thresholds! Check the report for details."
 
       - name: Upload Lighthouse Reports as Artifacts
         uses: actions/upload-artifact@v4
