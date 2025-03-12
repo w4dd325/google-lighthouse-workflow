@@ -20,10 +20,12 @@ jobs:
       - name: Run Lighthouse for Multiple URLs
         run: |
           mkdir -p lhci_reports
-          lhci autorun --collect.url=https://example.cypress.io/ --upload.target=filesystem --upload.outputDir=./lhci_reports/homepage
-          lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
-          lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
-
+          # lhci autorun --collect.url=https://example.cypress.io/ --upload.target=filesystem --upload.outputDir=./lhci_reports/homepage
+          # lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
+          # lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
+          lhci collect --url=https://example.cypress.io/ --numberOfRuns=1 --json --output=./lhci_reports/homepage.json
+          lhci collect --url=https://example.cypress.io/commands/querying --numberOfRuns=1 --json --output=./lhci_reports/querying.json
+          lhci collect --url=https://example.cypress.io/utilities --numberOfRuns=1 --json --output=./lhci_reports/utilities.json
 
       - name: Check Custom Thresholds for FCP and LCP
         run: |
