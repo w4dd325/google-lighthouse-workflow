@@ -26,7 +26,8 @@ jobs:
 
       - name: Run Lighthouse CI with Thresholds
         run: |
-          lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
+          # lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
+          lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1" --output=./lhci_reports
           
       - name: Upload Lighthouse Reports as Artifacts
         uses: actions/upload-artifact@v4
