@@ -1,0 +1,23 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "https://example.cypress.io/",
+        "https://example.cypress.io/commands/querying",
+        "https://example.cypress.io/utilities"
+      ],
+      "numberOfRuns": 1
+    },
+    "assert": {
+      "assertions": {
+        "first-contentful-paint": ["error", { "maxNumericValue": 1800 }],
+        "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": "./lhci_reports"
+    }
+  }
+}
