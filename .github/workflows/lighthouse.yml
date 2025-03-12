@@ -27,9 +27,9 @@ jobs:
       - name: Run Lighthouse CI with Thresholds
         run: |
           # lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
-          echo "Current directory: $(pwd)"
-          cd /lhci_reports
-          echo "Current directory: $(pwd)"
+          ls -la
+          cd lhci_reports
+          ls -la
           lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
           
       - name: Upload Lighthouse Reports as Artifacts
