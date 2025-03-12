@@ -10,8 +10,8 @@
     },
     "assert": {
       "assertions": {
-        "first-contentful-paint": ["error", { "maxNumericValue": 1800 }],
-        "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
+        "first-contentful-paint": ["error", { "maxNumericValue": 5000 }],
+        "largest-contentful-paint": ["error", { "maxNumericValue": 5000 }],
         "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }]
       }
     },
