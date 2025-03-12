@@ -17,6 +17,21 @@ jobs:
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
+      - name: Create Lighthouse Config
+        run: |
+          echo '{
+            "ci": {
+              "assert": {
+                "assertions": {
+                  "first-contentful-paint": ["error", {"maxScore": 1800}],
+                  "largest-contentful-paint": ["error", {"maxScore": 2500}],
+                  "interactive-to-next-paint": ["error", {"maxScore": 200}],
+                  "cumulative-layout-shift": ["error", {"maxScore": 0.1}]
+                }
+              }
+            }
+          }' > lhci-config.json
+
       - name: Run Lighthouse for Multiple URLs
         run: |
           mkdir -p lhci_reports
@@ -26,11 +41,8 @@ jobs:
 
       - name: Run Lighthouse CI with Thresholds
         run: |
-          # lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
-          ls -la
-          cd lhci_reports
-          ls -la
-          lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
+          # Run assertions based on the config file
+          lhci assert --config=lhci-config.json
           
       - name: Upload Lighthouse Reports as Artifacts
         uses: actions/upload-artifact@v4
