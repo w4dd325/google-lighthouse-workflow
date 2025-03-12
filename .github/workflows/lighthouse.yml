@@ -1,0 +1,31 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse for Multiple URLs
+        run: |
+          mkdir -p lhci_reports
+          lhci autorun --collect.url=https://example.cypress.io/ --upload.target=filesystem --upload.outputDir=./lhci_reports/homepage
+          lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
+          lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
+          
+      - name: Upload Lighthouse Reports as Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: ./lhci_reports
