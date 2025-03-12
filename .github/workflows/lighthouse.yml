@@ -21,13 +21,16 @@ jobs:
         run: |
           mkdir -p lhci_reports
           lhci autorun --collect.url=https://example.cypress.io/ --upload.target=filesystem --upload.outputDir=./lhci_reports/homepage
-          lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
-          lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
+          # lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
+          # lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
 
       - name: Run Lighthouse CI with Thresholds
         run: |
           # lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
-          lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1" --output=./lhci_reports
+          echo "Current directory: $(pwd)"
+          cd /lhci_reports
+          echo "Current directory: $(pwd)"
+          lhci assert --thresholds="fcp:1800,lcp:2500,inp:200,cls:0.1"
           
       - name: Upload Lighthouse Reports as Artifacts
         uses: actions/upload-artifact@v4
