@@ -17,16 +17,12 @@ jobs:
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
-      - name: Run Lighthouse for Multiple URLs
-        run: |
-          mkdir -p lhci_reports
-          lhci autorun --collect.url=https://example.cypress.io/ --upload.target=filesystem --upload.outputDir=./lhci_reports/homepage
-          # lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
-          # lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
+      - name: Run Lighthouse CI
+        run: lhci autorun
 
       - name: Run Lighthouse Assertions
         run: |
-          lhci assert || echo "⚠️ Lighthouse scores are below 100%! Check the report for details."
+          lhci assert || echo "⚠️ Lighthouse scores are below the set thresholds! Check the report for details."
 
       - name: Upload Lighthouse Reports as Artifacts
         uses: actions/upload-artifact@v4
