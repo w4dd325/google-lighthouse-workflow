@@ -24,6 +24,42 @@ jobs:
           lhci autorun --collect.url=https://example.cypress.io/commands/querying --upload.target=filesystem --upload.outputDir=./lhci_reports/querying
           lhci autorun --collect.url=https://example.cypress.io/utilities --upload.target=filesystem --upload.outputDir=./lhci_reports/utilities
 
+
+      - name: Check Custom Thresholds for FCP and LCP
+        run: |
+          # Define thresholds for specific metrics (ms)
+          FCP_THRESHOLD=500
+          LCP_THRESHOLD=2500
+
+          # Loop over each report to check metrics
+          for file in ./lhci_reports/*.json; do
+            echo "Processing $file"
+            
+            # Extract the relevant metrics from the Lighthouse JSON report
+            FCP=$(jq .audits."first-contentful-paint".numericValue $file)
+            LCP=$(jq .audits."largest-contentful-paint".numericValue $file)
+            CLS=$(jq .audits."cumulative-layout-shift".numericValue $file)
+
+            # Output the metrics
+            echo "$file: FCP = $FCP ms"
+            echo "$file: LCP = $LCP ms"
+            echo "$file: CLS = $CLS"
+
+            # Check if First Contentful Paint (FCP) exceeds the threshold
+            if (( $(echo "$FCP > $FCP_THRESHOLD" | bc -l) )); then
+              echo "$file: FCP ($FCP ms) exceeded threshold of $FCP_THRESHOLD ms"
+              exit 1 # Fail the build if the threshold is exceeded
+            fi
+
+            # Check if Largest Contentful Paint (LCP) exceeds the threshold
+            if (( $(echo "$LCP > $LCP_THRESHOLD" | bc -l) )); then
+              echo "$file: LCP ($LCP ms) exceeded threshold of $LCP_THRESHOLD ms"
+              exit 1 # Fail the build if the threshold is exceeded
+            fi
+
+            echo "$file: FCP and LCP are within the thresholds."
+          done
+          
       - name: Upload Lighthouse Reports as Artifacts
         uses: actions/upload-artifact@v4
         with:
