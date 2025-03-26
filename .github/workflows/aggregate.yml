@@ -19,7 +19,7 @@ jobs:
       # Run Lighthouse CI multiple times (e.g., 3 runs)
       - name: Run Lighthouse CI multiple times
         run: |
-          npx -p @lhci/cli lhci collect --url https://example.cypress.io/ -n 3 --outputDir ./lhci_reports
+          npx -p @lhci/cli lhci collect --url https://example.com -n 3 --outputDir ./lhci_reports
 
       # Process Lighthouse reports to calculate 95th percentile
       - name: Process Lighthouse reports for 95th percentile
@@ -52,22 +52,23 @@ jobs:
             reports: files
           };
 
-          const aggregateHtml = \`
+          // Generate HTML report using double quotes and escaped characters
+          const aggregateHtml = \"
           <!DOCTYPE html>
-          <html lang="en">
+          <html lang=\\\"en\\\">
           <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta charset=\\\"UTF-8\\\">
+            <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">
             <title>Aggregated Lighthouse Report</title>
           </head>
           <body>
             <h1>Aggregated Lighthouse Report</h1>
-            <h2>95th Percentile Performance Score: \${percentile95 * 100}%</h2>
+            <h2>95th Percentile Performance Score: \\${percentile95 * 100}%</h2>
             <h3>Raw Reports:</h3>
-            <pre>\${JSON.stringify(aggregateReport, null, 2)}</pre>
+            <pre>\\${JSON.stringify(aggregateReport, null, 2)}</pre>
           </body>
           </html>
-          \`;
+          \";
 
           // Save the aggregated HTML report
           fs.writeFileSync("./lhci_reports/aggregate_report.html", aggregateHtml, "utf-8");
