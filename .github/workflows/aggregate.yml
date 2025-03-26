@@ -23,9 +23,6 @@ jobs:
       - name: Run Lighthouse CI multiple times
         run: |
           npx -p @lhci/cli lhci collect --url https://example.com -n 1 --outputDir ./lhci_reports
-
-      - name: List current directory contents
-        run: ls -l ./lhci_reports
         
       - name: List current directory contents
         run: ls -l
