@@ -11,24 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Install Lighthouse CI
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
-      - name: List current directory contents
-        run: ls -l
-        
-      # Run Lighthouse CI multiple times (e.g., 3 runs)
-      - name: Run Lighthouse CI multiple times
-        run: |
-          run: lhci autorun
-        
-      - name: List current directory contents
-        run: ls -l
+      - name: Run Lighthouse CI
+        run: lhci autorun
 
       # Install dependencies and run the process-reports.js script
       - name: Process Lighthouse reports for 95th percentile
