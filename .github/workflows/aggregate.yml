@@ -25,8 +25,7 @@ jobs:
       # Run Lighthouse CI multiple times (e.g., 3 runs)
       - name: Run Lighthouse CI multiple times
         run: |
-          npx -p @lhci/cli lhci collect --url https://example.com -n 1 --outputDir ./lhci_reports
-          ls -l ./lhci_reports 
+          run: lhci autorun
         
       - name: List current directory contents
         run: ls -l
