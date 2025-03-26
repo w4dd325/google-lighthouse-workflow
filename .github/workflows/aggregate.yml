@@ -18,7 +18,7 @@ jobs:
         run: npm install -g @lhci/cli
 
       - name: Run Lighthouse CI
-        run: lhci collect --config .lighthouserc.json --output html --output-path ./lighthouse-report.html
+        run: lhci collect --config .lighthouserc.json --output html --output-path ./lighthouse-report
 
       - name: List current directory contents
         run: ls -l
@@ -29,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-reports
-          path: lighthouse-report.html
+          path: ./lighthouse-report
