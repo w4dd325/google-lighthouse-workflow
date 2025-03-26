@@ -18,12 +18,7 @@ jobs:
         run: npm install -g @lhci/cli
 
       - name: Run Lighthouse CI
-        run: lhci autorun
-
-      # Install dependencies and run the process-reports.js script
-      - name: Process Lighthouse reports for 95th percentile
-        run: |
-          node ./process-reports.js
+        run: lhci collect --config .lighthouserc.js --output html --output-path ./lighthouse-report.html
 
       - name: List current directory contents
         run: ls -l
@@ -34,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-reports
-          path: ./lhci_reports
+          path: lighthouse-report.html
