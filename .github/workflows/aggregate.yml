@@ -18,7 +18,7 @@ jobs:
         run: npm install -g @lhci/cli
 
       - name: Run Lighthouse CI
-        run: lhci collect --config .lighthouserc.js --output html --output-path ./lighthouse-report.html
+        run: lhci collect --config .lighthouserc.json --output html --output-path ./lighthouse-report.html
 
       - name: List current directory contents
         run: ls -l
